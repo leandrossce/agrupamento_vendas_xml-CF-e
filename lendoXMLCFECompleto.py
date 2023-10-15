@@ -1,5 +1,3 @@
-###ESSA VERSAO LISTOU TODAS AS NOTAS DE ENTRADA DE 08/2023 DO JOSE BARBOSA, CUSTOS CORRETOS, MAS USANDO ANOTAÇÃO 1000.00 AO INVÉS DE 1000,00 NO EXCEL
-
 import xml.etree.ElementTree as ET
 import pandas as pd
 import csv
@@ -138,12 +136,14 @@ def ler_todos_arquivos_xml(diretorio):
 
 
 
+diretorio = "C:\\Users\\Gabriel\\Desktop\\chromedriver_win32\\testexml\\Tamires\\TAmires\\092023\\"       #CAMINHO ONDE CONTÉM OS ARQUIVOS XML CF-E
+diretorio_relatorio_cfe='C:\\Users\\Gabriel\\Desktop\\Reuniao Python\\Materiais\\VENDAS_NAO_AGRUPADAS092023.csv'
+diretorio_relatorio_agrupamento_vendas_cfe='C:\\Users\\Gabriel\\Desktop\\Reuniao Python\\Materiais\\AGRUPAMENTO_VENDAS092023.xlsx'
 
 ############ INICIO LEITURA XML ############
 
-diretorio = "C:\\Users\\Gabriel\\Desktop\\chromedriver_win32\\agrupamentoVendasCFE\\"       #CAMINHO ONDE CONTÉM OS ARQUIVOS XML CF-E
 
-with open('C:\\Users\Gabriel\\Desktop\\chromedriver_win32\\agrupamentoVendasCFE\\ver.csv', mode='w', newline='') as file:
+with open(diretorio_relatorio_cfe, mode='w', newline='') as file:
     # Cria um objeto writer para escrever no arquivo CSV
     writer = csv.writer(file, delimiter=';')
     writer.writerow(["Codigo","Nome","NCM.", "CFOP", "UNID. MEDIDA", "QTD","VALOR UNITARIO","VALOR TOTAL","DATA EMISSAO","MEIO DE PAGAMENTO","CHAVE ELETRONICA"])
@@ -159,7 +159,7 @@ with open('C:\\Users\Gabriel\\Desktop\\chromedriver_win32\\agrupamentoVendasCFE\
 import pandas as pd
 
 # Ler o arquivo CSV
-df = pd.read_csv('C:\\Users\Gabriel\\Desktop\\chromedriver_win32\\agrupamentoVendasCFE\\ver.csv', sep=';', encoding='ISO-8859-1')
+df = pd.read_csv(diretorio_relatorio_cfe, sep=';', encoding='ISO-8859-1')
 
 # Substitua as vírgulas por pontos e converta a coluna para float
 df['VALOR TOTAL'] = df['VALOR TOTAL'].str.replace(',', '.').astype(float)
@@ -168,7 +168,7 @@ df['VALOR TOTAL'] = df['VALOR TOTAL'].str.replace(',', '.').astype(float)
 resultado = df.groupby(['DATA EMISSAO', 'MEIO DE PAGAMENTO'])['VALOR TOTAL'].sum().reset_index()
 
 # Gravar resultado em um arquivo Excel
-resultado.to_excel('C:\\Users\Gabriel\\Desktop\\chromedriver_win32\\agrupamentoVendasCFE\\AGRUPAMENTO_VENDAS.xlsx', index=False, engine='openpyxl')
+resultado.to_excel(diretorio_relatorio_agrupamento_vendas_cfe, index=False, engine='openpyxl')
 
 
 ############# FIM AGRUPAMENTO DE VENDAS ########################
